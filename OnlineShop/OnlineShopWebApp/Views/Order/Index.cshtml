@@ -1,0 +1,44 @@
+﻿@model OrderVM
+
+@{
+    ViewData["Title"] = "Оформление заказа";
+}
+
+<h2 class="page-title">Оформление заказа</h2>
+
+<form asp-controller="order" asp-action="create" method="post">
+    <div>
+        <label asp-for="Lastname" class="form-input-label">Фамилия<sup class="required-field-mark">*</sup></label><br />
+        <input type="text" asp-for="Lastname" class="form-control" placeholder="Иванов" />
+        <span asp-validation-for="Lastname" class="text-danger" />
+    </div>
+    <div>
+        <label asp-for="Firstname" class="form-input-label">Имя<sup class="required-field-mark">*</sup></label><br />
+        <input type="text" asp-for="Firstname" class="form-control" placeholder="Иван" />
+        <span asp-validation-for="Firstname" class="text-danger" />
+    </div>
+    <div>
+        <label asp-for="Middlename" class="form-input-label">Отчество</label><br />
+        <input type="text" asp-for="Middlename" class="form-control" placeholder="Иванович" />
+        <span asp-validation-for="Middlename" class="text-danger" />
+    </div>
+    <div>
+        <label asp-for="Phone" class="form-input-label">Телефон<sup class="required-field-mark">*</sup></label><br />
+        <input type="tel" asp-for="Phone" class="form-control" placeholder="+70000000000" />
+        <span asp-validation-for="Phone" class="text-danger" />
+    </div>
+    <div>
+        <label asp-for="Email" class="form-input-label">Адрес электронной почты<sup class="required-field-mark">*</sup></label><br />
+        <input type="text" asp-for="Email" class="form-control" placeholder="name@example.com" />
+        <span asp-validation-for="Email" class="text-danger" />
+    </div>
+    <div>
+        <label asp-for="Comment" class="form-input-label">Комментарий к заказу</label><br />
+        <textarea asp-for="Comment" class="form-control" id="Comment" name="Comment" rows="3"></textarea>
+        <span asp-validation-for="Comment" class="text-danger" />
+    </div>
+    <div class="float-end m-5">
+        <a class="btn btn-outline-primary" href="/" role="button">Продолжить покупки</a>
+        <button type="submit" class="btn btn-outline-success">Оформить заказ</button>
+    </div>
+</form>

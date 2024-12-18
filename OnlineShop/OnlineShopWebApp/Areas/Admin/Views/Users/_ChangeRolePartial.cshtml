@@ -1,0 +1,20 @@
+﻿@model UserRolesVM
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="changeRoleLabel">Изменение роли</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+    </div>
+    <div class="modal-body">
+        <form id="changeRoleForm" asp-area="admin" asp-controller="users" asp-action="changeRole" method="post">
+            <input type="hidden" asp-for="@Model.User.Login" name="Login"/>
+            <input type="hidden" asp-for="@Model.User.Role.Name" name="RoleName" id="RoleName" />
+
+            @Html.DropDownList("selectedRole", new SelectList(Model.Roles, "Name", "Name"), "Выберите роль", new { @class = "form-control edit-role", id = "roleDropdown" })
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Закрыть</button>
+        <button type="submit" form="changeRoleForm" class="btn btn-outline-primary">Сохранить изменения</button>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@model RoleVM
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="addRoleLabel">Добавление роли</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+    </div>
+    <div class="modal-body">
+        <form id="addRoleForm" asp-area="admin" asp-controller="roles" asp-action="add" method="post">
+            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Name" class="form-input-label">Название<sup class="required-field-mark">*</sup></label><br />
+                <input type="text" asp-for="Name" name="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger" />
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Закрыть</button>
+        <button type="submit" form="addRoleForm" class="btn btn-outline-primary">Сохранить изменения</button>
+    </div>
+</div>

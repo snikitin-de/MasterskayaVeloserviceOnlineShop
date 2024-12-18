@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: masterskaya_veloservice_db
+    image: postgres:17.2
+    env_file:
+      - docker.env
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d MasterskayaVeloserviceOnlineShop"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - app-network
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+  onlineshopwebapp:
+    container_name: masterskaya_veloservice_web_app
+    image: ${DOCKER_REGISTRY-}onlineshopwebapp
+    env_file:
+      - docker.env
+    build:
+      context: .
+      dockerfile: OnlineShopWebApp/Dockerfile
+    ports:
+      - "443:8081" # HTTPS
+    networks:
+      - app-network
+    volumes:
+      - images:/app/wwwroot/images
+    depends_on:
+      - postgres
+    restart: unless-stopped
+  onlineshopwebapi:
+    container_name: masterskaya_veloservice_web_api
+    image: ${DOCKER_REGISTRY-}onlineshopwebapi
+    env_file:
+      - docker.env
+    build:
+      context: .
+      dockerfile: OnlineShopWebApi/Dockerfile
+    ports:
+      - "4443:8081" # HTTPS
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  app-network:
+volumes:
+  postgresql_data:
+  images:  

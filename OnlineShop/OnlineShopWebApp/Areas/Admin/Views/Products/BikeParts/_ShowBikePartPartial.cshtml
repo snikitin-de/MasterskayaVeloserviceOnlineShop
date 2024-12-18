@@ -1,0 +1,47 @@
+﻿@model BikePartVM;
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations;
+@using System.ComponentModel
+
+<div class="modal-header">
+    <h5 class="modal-title">Просмотр товара</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="text-center">
+        <img src="@Model.Images[0].Path" class="p-4" alt="@Model.Name" height="250">
+    </div>
+
+    <h4 class="card-title">@Model.Name</h4>
+    <h5 class="card-price"><b>@Math.Round(Model.Price) ₽</b></h5>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Описание характеристик</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var type = Model.GetType();
+                var props = type.GetProperties();
+
+                foreach (var prop in props)
+                {
+                    var name = prop.GetCustomAttribute<DisplayAttribute>()?.Name;
+                    var value = prop.GetValue(Model);
+
+                    if (name != null)
+                    {
+                        <tr>
+                            <td><i>@name</i>: @value</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+</div>

@@ -1,0 +1,57 @@
+﻿@model UserVM
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="addUserLabel">Добавление пользователя</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+    </div>
+    <div class="modal-body">
+        <form id="addUserForm" asp-area="admin" asp-controller="users" asp-action="add" method="post">
+            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Login" class="form-input-label">Логин<sup class="required-field-mark">*</sup></label><br />
+                <input type="text" asp-for="Login" name="Login" class="form-control" placeholder="Email адрес"/>
+                <span asp-validation-for="Login" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Firstname" class="form-input-label">Имя</label><br />
+                <input type="text" asp-for="Firstname" name="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Lastname" class="form-input-label">Фамилия</label><br />
+                <input type="text" asp-for="Lastname" name="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Middlename" class="form-input-label">Отчество</label><br />
+                <input type="text" asp-for="Middlename" name="Middlename" class="form-control" />
+                <span asp-validation-for="Middlename" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Phone" class="form-input-label">Телефон</label><br />
+                <input type="text" asp-for="Phone" name="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Address" class="form-input-label">Адрес</label><br />
+                <input type="text" asp-for="Address" name="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Password" class="form-input-label">Пароль<sup class="required-field-mark">*</sup></label><br />
+                <input type="password" asp-for="Password" name="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="ConfirmedPassword" class="form-input-label">Повторите пароль<sup class="required-field-mark">*</sup></label><br />
+                <input type="password" asp-for="ConfirmedPassword" name="ConfirmedPassword" class="form-control" />
+                <span asp-validation-for="ConfirmedPassword" class="text-danger" />
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Закрыть</button>
+        <button type="submit" form="addUserForm" class="btn btn-outline-primary">Сохранить изменения</button>
+    </div>
+</div>

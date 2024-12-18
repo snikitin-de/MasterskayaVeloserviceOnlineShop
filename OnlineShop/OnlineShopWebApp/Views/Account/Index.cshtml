@@ -1,0 +1,30 @@
+﻿@model UserVM
+
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 m-4">
+            <div class="card p-4">
+                <h2 class="mb-4 text-center">Личный кабинет</h2>
+
+                <ul class="nav nav-tabs account-menu">
+                  <li class="nav-item account-menu">
+                        <a href="#" class="nav-link active account-menu" aria-current="page" data-target="profile" data-user-login="@Model.Login">Мой профиль</a>
+                  </li>
+                  <li class="nav-item account-menu">
+                    <a href="#" class="nav-link account-menu" aria-current="page" data-target="orders" data-user-login="@Model.Login">Мои заказы</a>
+                  </li>
+                </ul>
+
+                <div id="content-container" class="account-content-container">
+                    <!-- Здесь будет отображаться содержимое частичных представлений -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/loadAccountPagePartView.js" asp-append-version="true"></script>

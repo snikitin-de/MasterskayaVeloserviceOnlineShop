@@ -1,0 +1,21 @@
+﻿@model decimal
+
+<div class="text-center d-flex align-items-center flex-column">
+    <div class="cart-container">
+        <img src="/images/buttons/Cart.svg" alt="Cart" class="menu-icon" style="z-index: 1;">
+        @if (Model > 0)
+        {
+            <span class="badge rounded-pill bg-warning cart-badge">
+                @if (Model > 99)
+                {
+                    @:99+
+                }
+                else
+                {
+                    @Model
+                }
+            </span>
+        }
+    </div>
+    <p class="mb-0">Корзина</p>
+</div>

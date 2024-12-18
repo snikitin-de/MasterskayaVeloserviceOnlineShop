@@ -1,0 +1,58 @@
+﻿@model UserVM
+
+<div class="d-flex align-items-start m-4">
+    <div class="avatar-container text-center me-4">
+        <img src="@Model.Avatar.Path" alt="Аватар" class="img-thumbnail avatar edit-avatar" data-user-login="@Model.Login">
+        <div class="d-flex justify-content-center mt-2 btn-group-avatar">
+            <a href="#" class="btn btn-outline-primary btn-avatar edit-avatar" data-user-login="@Model.Login">Изменить</a>
+            <a asp-area="" asp-controller="account" asp-action="removeAvatar" asp-route-login="@Model.Login" class="btn btn-outline-primary btn-avatar">Удалить</a>
+        </div>
+    </div>
+
+    <form id="editAccountForm" asp-area="" asp-controller="account" asp-action="edit" method="post" class="flex-grow-1">
+        <div class="text-danger font-weight-bold mb-3" asp-validation-summary="ModelOnly"></div>
+        <div class="mb-3">
+            <label asp-for="Login" class="form-label">Логин</label>
+            <input type="text" asp-for="Login" name="Login" class="form-control" placeholder="@Model.Login" readonly />
+            <span asp-validation-for="Login" class="text-danger" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Firstname" class="form-label">Имя</label>
+            <input type="text" asp-for="Firstname" name="Firstname" class="form-control" placeholder="@Model.Firstname" />
+            <span asp-validation-for="Firstname" class="text-danger" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Lastname" class="form-label">Фамилия</label>
+            <input type="text" asp-for="Lastname" name="Lastname" class="form-control" placeholder="@Model.Lastname" />
+            <span asp-validation-for="Lastname" class="text-danger" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Middlename" class="form-label">Отчество</label>
+            <input type="text" asp-for="Middlename" name="Middlename" class="form-control" placeholder="@Model.Middlename" />
+            <span asp-validation-for="Middlename" class="text-danger" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label">Телефон</label>
+            <input type="text" asp-for="Phone" name="Phone" class="form-control" placeholder="@Model.Phone" />
+            <span asp-validation-for="Phone" class="text-danger" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address" class="form-label">Адрес</label>
+            <input type="text" asp-for="Address" name="Address" class="form-control" placeholder="@Model.Address" />
+            <span asp-validation-for="Address" class="text-danger" />
+        </div>
+        <div class="text-end">
+            <button type="submit" form="editAccountForm" class="btn btn-outline-primary">Сохранить изменения</button>
+        </div>
+    </form>
+
+    <div class="modal fade" id="editAvatarPartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="editAvatarModalContent">
+                <!-- Содержимое будет загружено через AJAX -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/editAvatar.js" asp-append-version="true"></script>

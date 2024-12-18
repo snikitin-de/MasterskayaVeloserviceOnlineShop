@@ -1,0 +1,75 @@
+﻿@model ComparisonVM
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations;
+@using System.ComponentModel
+
+@{
+    ViewData["Title"] = "Сравнение";
+}
+
+<h2 class="page-title">Сравнение</h2>
+
+@if (@Model.Products.Count() == 0)
+{
+    <p>Нет товаров для сравнения!</p>
+}
+else
+{
+    <div class="container">
+        <div class="row g-3">
+            @foreach (var comparisonItem in @Model.Products)
+            {
+                <div class="col-sm-3">
+                    <div class="card shadow bg-white">
+                        <img src="@comparisonItem.Images[0].Path" class="card-img-top p-4" alt="@comparisonItem.Name">
+
+                        <div class="card-body">
+                            <div class="card-title">
+                                <a asp-controller="product" asp-action="index" asp-route-id="@comparisonItem.Id" class="card-link">@comparisonItem.Name</a>
+                            </div>
+                            <div class="align-items-end mt-auto">
+                                <h5 class="card-text"><b>@Math.Round(comparisonItem.Price) ₽</b></h5>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Сравнение характеристик</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var type = @comparisonItem.GetType();
+                                        var props = type.GetProperties();
+
+                                        foreach (var prop in props)
+                                        {
+                                            var name = prop.GetCustomAttribute<DisplayAttribute>()?.Name;
+                                            var value = prop.GetValue(@comparisonItem);
+
+                                            if (name != null)
+                                            {
+                                                <tr>
+                                                    <td><i>@name</i>: @value</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="float-end btn-comparison-list">
+        <a class="btn btn-outline-primary" href="/" role="button">Продолжить покупки</a>
+        <button type="button" class="btn btn-outline-danger" onclick="ClearComparison()">Очистить список сравнения</button>
+    </div>
+}
+
+<script src="~/js/comparison.js" asp-append-version="true"></script>

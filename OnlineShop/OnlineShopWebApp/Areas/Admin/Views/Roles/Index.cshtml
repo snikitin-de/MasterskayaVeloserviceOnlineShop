@@ -1,0 +1,101 @@
+﻿@model List<RoleVM>
+
+@{
+    ViewData["Title"] = "Администратор • Роли";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            @await Html.PartialAsync("Menu")
+        </div>
+        <div class="col-10">
+            <div class="admin-menu-container">
+                <h2>Роли</h2>
+
+                <div class="modal fade" id="addRolePartModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content" id="addRolePartModalContent">
+                            <!-- Содержимое будет загружено через AJAX -->
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Count() == 0)
+                {
+                    <h4>Список ролей пуст!</h4>
+                }
+                else
+                {
+                    <div class="modal fade" id="editRolePartModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" id="editRolePartModalContent">
+                                <!-- Содержимое будет загружено через AJAX -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Название роли</th>
+                                <th scope="col">Редактировать...</th>
+                                <th scope="col">Удалить...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var role in @Model)
+                            {
+                                <tr>
+                                    <td>@role.Name</td>
+                                    <td>
+                                        @if (role.CanBeEdited)
+                                        {
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="edit-role" data-role-id="@role.Id">
+                                                    <img src="/images/buttons/Edit.svg" alt="Edit">
+                                                </a>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (role.CanBeDeleted)
+                                        {
+                                            <div class="modal fade" id="removeRoleConfirmModal_@role.Id" tabindex="-1" aria-labelledby="removeRoleConfirmLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="removeRoleConfirmLabel">Потверждение удаления</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Вы действительно хотите удалить роль: <b>@role.Name</b>?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Нет</button>
+                                                            <a asp-area="admin" asp-controller="roles" asp-action="remove" asp-route-name="@role.Name" class="btn btn-outline-danger">Да</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="button" class="btn btn-outline-danger btn-remove-confirm" data-bs-toggle="modal" data-bs-target="#removeRoleConfirmModal_@role.Id">
+                                                <img src="/images/buttons/Remove.svg" alt="Remove">
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <a href="#" class="btn btn-outline-primary add-role btn-add-role">Добавить роль</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/adminPanel/addRole.js" asp-append-version="true"></script>
+<script src="~/js/adminPanel/editRole.js" asp-append-version="true"></script>

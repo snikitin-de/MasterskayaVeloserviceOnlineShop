@@ -1,0 +1,112 @@
+﻿@model OrderVM
+
+@{
+    ViewData["Title"] = $"Администратор • Заказ №{@Model.Number}";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            @await Html.PartialAsync("Menu")
+        </div>
+        <div class="col-10">
+            <div class="col-10">
+                <div class="order-container">
+                    <h2>Заказ №@Model.Number</h2>
+                    <div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Дата и время оформления
+                            </div>
+                            <div class="col-auto">
+                                @Model.Created.ToString("HH:mm:ss dd.MM.yyyy")
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Получатель
+                            </div>
+                            <div class="col-auto">
+                                @Model.Lastname @Model.Firstname @Model.Middlename
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Телефон
+                            </div>
+                            <div class="col-auto">
+                                @Model.Phone
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Email
+                            </div>
+                            <div class="col-auto">
+                                @Model.Email
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Комментарий
+                            </div>
+                            <div class="col-auto">
+                                @Model.Comment
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Сумма заказа
+                            </div>
+                            <div class="col-auto">
+                                @Model.Sum ₽
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-12">
+                                Список товаров
+                            </div>
+                            <div class="col-auto">
+                                <table class="table">
+                                    <thead class="order-thead">
+                                        <tr>
+                                            <th scope="col">Наименование</th>
+                                            <th scope="col">Цена</th>
+                                            <th scope="col">Сумма</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.OrderItems)
+                                        {
+                                            <tr>
+                                                <td>@item.Item.Name</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Sum</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center order-detail">
+                            <div class="col-auto">
+                                Статус заказа
+                            </div>
+                            <div class="col-auto">
+                                <select id="orderStatus"
+                                        name="orderStatus"
+                                        asp-for="@Model.Status"
+                                        asp-items="@Html.GetEnumSelectList<OrderStatusVM>().Select(x => { x.Value=((OrderStatusVM)int.Parse(x.Value)).ToString(); return x; })"
+                                        class="form-select"
+                                        data-order-id="@Model.Id">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/adminPanel/order.js" asp-append-version="true"></script>

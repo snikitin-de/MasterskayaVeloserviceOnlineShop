@@ -1,0 +1,151 @@
+﻿@using OnlineShop.Db
+@using OnlineShop.Db.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+
+<header>
+    <div id="controller" class="d-none" name="@ViewContext?.RouteData?.Values["controller"]"></div>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-0">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center w-100">
+                <!-- Логотип -->
+                <div class="navbar-brand d-flex align-items-center me-4">
+                    <img src="/images/buttons/Logo.svg" alt="Logo" class="me-2">
+                    <div class="logo">
+                        <div>МАСТЕРСКАЯ</div>
+                        <div>ВЕЛОСЕРВИС</div>
+                    </div>
+                </div>
+
+                <!-- Навигационное меню -->
+                <ul class="navbar-nav d-flex align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="home" asp-action="index">
+                            <div class="text-center">
+                                <img src="/images/buttons/Home.svg" alt="Home" class="menu-icon">
+                                <p class="mb-0">Главная</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="comparison" asp-action="index">
+                            @await Component.InvokeAsync("Comparison")
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="favorites" asp-action="index">
+                            @await Component.InvokeAsync("Favorites")
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="cart" asp-action="index">
+                            @await Component.InvokeAsync("Cart")
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="#" class="nav-link text-dark authorize dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="text-center">
+                                    @{
+                                        var user = await UserManager.GetUserAsync(User);
+
+                                        if (user != null)
+                                        {
+                                            <img src="@user.Avatar.Path" alt="Аватар" class="menu-icon btn-menu-avatar">
+
+                                            if (user.Firstname != null)
+                                            {
+                                                <p class="mb-0">@user.Firstname</p>
+                                            } else
+                                            {
+                                                <p class="mb-0">@user.Email</p>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <form action="/account" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="dropdown-item">Личный кабинет</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="/account/authorization/logout" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="dropdown-item">Выйти</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        } else
+                        {
+                            <a href="#" class="nav-link text-dark authorize">
+                                <div class="text-center">
+                                    <img src="/images/buttons/Authorization.svg" alt="Authorization" class="menu-icon">
+                                    <p class="mb-0">Войти</p>
+                                </div>
+                            </a>
+                            <div class="modal fade" id="authorizationPartModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" id="authorizationPartModalContent">
+                                        <!-- Содержимое будет загружено через AJAX -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="registrationPartModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" id="registrationPartModalContent">
+                                        <!-- Содержимое будет загружено через AJAX -->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </li>
+
+                    @if (User.IsInRole(Constants.AdminRoleName))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="admin" asp-controller="orders" asp-action="index">
+                                <div class="text-center">
+                                    <img src="/images/buttons/AdminPanel.svg" alt="AdminPanel" class="menu-icon">
+                                    <p class="mb-0">Администратор</p>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mt-0">
+        <div class="container-fluid position-relative">
+            <!-- Левое меню -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="bikeParts" asp-action="index">Запчасти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="services" asp-action="index">Сервис</a>
+                </li>
+            </ul>
+
+            <!-- Строка поиска -->
+            <div class="input-group search-group position-absolute start-50 translate-middle-x">
+                <input type="text" id="searchInput" class="form-control" placeholder="Поиск по сайту">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <a href="#" id="searchLink"><img src="/images/buttons/Search.svg" alt="Поиск" class="search-icon"></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script src="~/js/search.js" asp-append-version="true"></script>
+<script src="~/js/showAuthorizationForm.js" asp-append-version="true"></script>
+<script src="~/js/showRegistrationForm.js" asp-append-version="true"></script>

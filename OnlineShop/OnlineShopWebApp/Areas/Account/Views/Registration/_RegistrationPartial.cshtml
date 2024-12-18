@@ -1,0 +1,33 @@
+﻿@model Registration
+
+<div class="modal-content" id="registrationModalContent">
+    <div class="modal-header">
+        <h5 class="modal-title" id="loginLabel">Регистрация</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+    </div>
+    <div class="modal-body">
+        <form id="registrationForm" asp-area="account" asp-controller="registration" asp-action="register" method="post">
+            @Html.AntiForgeryToken()
+            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+            <input type="hidden" id="returnUrl" asp-for="ReturnUrl" />
+            <div class="form-center-input-wrapper">
+                <label asp-for="Login">Логин<sup class="text-danger">*</sup></label>
+                <input type="text" asp-for="Login" class="form-control form-input" placeholder="Email адрес"/>
+                <span asp-validation-for="Login" class="text-danger" />
+            </div>
+            <div class="form-center-input-wrapper">
+                <label asp-for="Password">Пароль<sup class="text-danger">*</sup></label>
+                <input type="password" asp-for="Password" class="form-control form-input" />
+                <span asp-validation-for="Password" class="text-danger" />
+            </div>
+            <div class="form-center-input-wrapper">
+                <label asp-for="ConfirmedPassword">Повторите пароль<sup class="text-danger">*</sup></label>
+                <input type="password" asp-for="ConfirmedPassword" class="form-control form-input" />
+                <span asp-validation-for="ConfirmedPassword" class="text-danger" />
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+        <button type="submit" class="btn btn-dark w-50 btn-authorization" form="registrationForm">Зарегистрироваться</button>
+    </div>
+</div>

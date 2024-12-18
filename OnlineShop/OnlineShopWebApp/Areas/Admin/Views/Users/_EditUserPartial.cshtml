@@ -1,0 +1,47 @@
+﻿@model UserVM
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="editUserLabel">Редактирование пользователя</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+    </div>
+    <div class="modal-body">
+        <form id="editUserForm" asp-area="admin" asp-controller="users" asp-action="edit" method="post">
+            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Login" class="form-input-label">Логин</label><br />
+                <input type="text" asp-for="Login" name="Login" value="@Model.Login" class="form-control" readonly />
+                <span asp-validation-for="Login" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Firstname" class="form-input-label">Имя</label><br />
+                <input type="text" asp-for="Firstname" name="Firstname" value="@Model.Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Lastname" class="form-input-label">Фамилия</label><br />
+                <input type="text" asp-for="Lastname" name="Lastname" value="@Model.Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Middlename" class="form-input-label">Отчество</label><br />
+                <input type="text" asp-for="Middlename" name="Middlename" value="@Model.Middlename" class="form-control" />
+                <span asp-validation-for="Middlename" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Phone" class="form-input-label">Телефон</label><br />
+                <input type="text" asp-for="Phone" name="Phone" value="@Model.Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger" />
+            </div>
+            <div>
+                <label asp-for="Address" class="form-input-label">Адрес</label><br />
+                <input type="text" asp-for="Address" name="Address" value="@Model.Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger" />
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Закрыть</button>
+        <button type="submit" form="editUserForm" class="btn btn-outline-primary">Сохранить изменения</button>
+    </div>
+</div>

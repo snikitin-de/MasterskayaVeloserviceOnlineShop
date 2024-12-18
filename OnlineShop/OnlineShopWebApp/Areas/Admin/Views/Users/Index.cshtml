@@ -1,0 +1,64 @@
+﻿@model List<UserVM>
+
+@{
+    ViewData["Title"] = "Администратор • Пользователи";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            @await Html.PartialAsync("Menu")
+        </div>
+        <div class="col-10">
+            <div class="admin-menu-container">
+                <h2>Список пользователей</h2>
+
+                <div class="modal fade" id="addUserPartModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content" id="addUserPartModalContent">
+                            <!-- Содержимое будет загружено через AJAX -->
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Count() == 0)
+                {
+                    <h4>Список пользователей пуст!</h4>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Email (логин)</th>
+                                <th scope="col">Фамилия</th>
+                                <th scope="col">Имя</th>
+                                <th scope="col">Отчество</th>
+                                <th scope="col">Телефон</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in @Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-area="admin" asp-controller="users" asp-action="user" asp-route-login="@user.Login" id="@user.Login">@user.Login</a>
+                                    </td>
+                                    <td>@user.Lastname</td>
+                                    <td>@user.Firstname</td>
+                                    <td>@user.Middlename</td>
+                                    <td>@user.Phone</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                <div class="d-flex justify-content-end">
+                    <a href="#" class="btn btn-outline-primary add-user">Добавить пользователя</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/adminPanel/addUser.js" asp-append-version="true"></script>

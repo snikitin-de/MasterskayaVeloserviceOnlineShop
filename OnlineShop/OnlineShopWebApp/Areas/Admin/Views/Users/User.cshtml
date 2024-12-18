@@ -1,0 +1,225 @@
+﻿@model UserVM
+
+@{
+    ViewData["Title"] = $"Администратор • Пользователь {@Model.Login}";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            @await Html.PartialAsync("Menu")
+        </div>
+        <div class="col-10">
+            <div class="col-10">
+                <div class="user-container">
+                    <h2>Пользователь @Model.Login</h2>
+                    <div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Имя
+                            </div>
+                            <div class="col-auto">
+                                @Model.Firstname
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Фамилия
+                            </div>
+                            <div class="col-auto">
+                                @Model.Lastname
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Отчество
+                            </div>
+                            <div class="col-auto">
+                                @Model.Middlename
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Email (логин)
+                            </div>
+                            <div class="col-auto">
+                                @Model.Login
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Телефон
+                            </div>
+                            <div class="col-auto">
+                                @Model.Phone
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Адрес
+                            </div>
+                            <div class="col-auto">
+                                @Model.Address
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Роль
+                            </div>
+                            <div class="col-auto">
+                                @Model.Role.Name
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center user-detail">
+                            <div class="col-auto">
+                                Действия
+                            </div>
+                            <div class="col-auto">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="adminUserActionsDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Действия
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @foreach (var value in Enum.GetValues(typeof(AdminUserAction)))
+                                        {
+                                            var status = Helpers.GetFieldDisplayName(value);
+
+                                            if ((AdminUserAction)value != AdminUserAction.RemoveUser)
+                                            {
+                                                <li><a class="dropdown-item" href="#" onclick="executeAction(`@Html.Raw(value)`)">@status</a></li>
+                                            } else
+                                            {
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeUserConfirmModal">@status</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editUserPartModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" id="editUserPartModalContent">
+                                <!-- Содержимое будет загружено через AJAX -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="changePasswordPartModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" id="changePasswordPartModalContent">
+                                <!-- Содержимое будет загружено через AJAX -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="changeRolePartModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" id="changeRolePartModalContent">
+                                <!-- Содержимое будет загружено через AJAX -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="removeUserConfirmModal" tabindex="-1" aria-labelledby="removeUserConfirmLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="removeUserConfirmLabel">Потверждение удаления</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Вы действительно хотите удалить пользователя: <b>@Model.Login</b>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Нет</button>
+                                    <a asp-area="admin" asp-controller="users" asp-action="remove" asp-route-login="@Model.Login" class="btn btn-outline-danger">Да</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Hidden("RedirectTo", Url.Action("index", "users"));
+
+<script type="text/javascript">
+    function executeAction(action){
+        switch (action)
+        {
+            case 'Edit':
+                // Открытие формы редактирования пользователя
+                fetch('/admin/users/edit?login=@Model.Login')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('editUserPartModalContent').innerHTML = html;
+                        var modal = new bootstrap.Modal(document.getElementById('editUserPartModal'));
+                        modal.show();
+                        $.validator.unobtrusive.parse('#editUserForm');
+                    });
+
+                // Отправка формы редактирования пользователя через AJAX
+                $('#editUserPartModal').on('submit', '#editUserForm', function (e) {
+                    e.preventDefault();
+
+                    var form = $(this);
+
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        data: form.serialize(),
+                        success: function (result) {
+                            if ($(result).find('.text-danger').length > 0) {
+                                $('#editUserPartModalContent').html(result);
+                                $.validator.unobtrusive.parse('#editUserForm');
+                            } else {
+                                $('#editUserPartModal').modal('hide');
+                            }
+
+                            $(document).ajaxStop(function () {
+                                window.location.reload();
+                            });
+                        }
+                    });
+                });
+                break;
+             case 'ChangePassword':
+                // Открытие формы редактирования пароля
+                fetch('/admin/users/changePassword?login=@Model.Login')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('changePasswordPartModalContent').innerHTML = html;
+                        var modal = new bootstrap.Modal(document.getElementById('changePasswordPartModal'));
+                        modal.show();
+                        $.validator.unobtrusive.parse('#changePasswordForm');
+                    });
+                break;
+             case 'AccessRights':
+                // Открытие формы редактирования роли
+                fetch('/admin/users/changeRole?login=@Model.Login')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('changeRolePartModalContent').innerHTML = html;
+                        var modal = new bootstrap.Modal(document.getElementById('changeRolePartModal'));
+                        modal.show();
+                    });
+        }
+    }
+
+    // Изменение значения роли в скрытом input для дальнейшей передачи его в контроллер
+    document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById('changeRolePartModal');
+
+        container.addEventListener('change', function (event) {
+            let target = event.target;
+
+            if (target.classList.contains('edit-role')) {
+                event.preventDefault();
+
+                var selectedValue = roleDropdown.value;
+
+                document.getElementById("RoleName").value = selectedValue;
+            }
+        });
+    });
+</script>

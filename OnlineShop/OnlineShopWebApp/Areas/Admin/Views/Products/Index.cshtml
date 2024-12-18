@@ -1,0 +1,197 @@
+﻿@model List<ProductVM>
+
+@{
+    ViewData["Title"] = "Администратор • Продукты";
+    var bikePartIndex = 1;
+    var serviceIndex = 1;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            @await Html.PartialAsync("Menu")
+        </div>
+        <div class="col-10">
+            <div class="col-10">
+                <div class="admin-menu-container">
+                    <h2>Продукты</h2>
+                    <div class="row g-3">
+                        @{
+                            var bikeParts = @Model.Where(x => x.Category == CategoryVM.BikeParts);
+                            var services = @Model.Where(x => x.Category == CategoryVM.Services);
+                        }
+
+                        <h3>Товары</h3>
+                        @await Html.PartialAsync("BikeParts/_AddBikePartPartial", new BikePartVM() { Name = "", Price = 0, Description = "", Manufacturer = "" })
+
+                        <div class="modal fade" id="editBikePartModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" id="editBikePartModalContent">
+                                    <!-- Содержимое будет загружено через AJAX -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="showBikePartModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" id="showBikePartModalContent">
+                                    <!-- Содержимое будет загружено через AJAX -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Наименование</th>
+                                    <th scope="col">Цена</th>
+                                    <th scope="col">Редактировать...</th>
+                                    <th scope="col">Удалить...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var bikePart in bikeParts)
+                                {
+                                    <tr>
+                                        <th scope="row">@bikePartIndex</th>
+                                        <td>
+                                            <a href="#" class="show-bike-part" data-bike-part-id="@bikePart.Id">
+                                                @bikePart.Name
+                                            </a>
+                                        </td>
+                                        <td>@bikePart.Price</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="edit-bike-part" data-bike-part-id="@bikePart.Id">
+                                                    <img src="/images/buttons/Edit.svg" alt="Edit">
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="modal fade" id="removeBikePartConfirmModal_@bikePart.Id" tabindex="-1" aria-labelledby="removeBikePartConfirmLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="removeBikePartConfirmLabel">Потверждение удаления</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Вы действительно хотите удалить запчасть: <b>@bikePart.Name</b>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Нет</button>
+                                                                <a asp-area="admin" asp-controller="products" asp-action="removeBikePart" asp-route-id="@bikePart.Id" class="btn btn-outline-danger">Да</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-danger btn-remove-confirm" data-bs-toggle="modal" data-bs-target="#removeBikePartConfirmModal_@bikePart.Id">
+                                                    <img src="/images/buttons/Remove.svg" alt="Remove">
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    bikePartIndex++;
+                                }
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addBikePartModal">Добавить товар</button>
+                        </div>
+
+                        <h3>Услуги</h3>
+                        @await Html.PartialAsync("Services/_AddServicePartial", new ServiceVM() { Name = "", Price = 0, Description = "" })
+
+                        <div class="modal fade" id="editServicePartModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" id="editServicePartModalContent">
+                                    <!-- Содержимое будет загружено через AJAX -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="showServiceModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" id="showServiceModalContent">
+                                    <!-- Содержимое будет загружено через AJAX -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Наименование</th>
+                                    <th scope="col">Цена</th>
+                                    <th scope="col">Редактировать...</th>
+                                    <th scope="col">Удалить...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var service in services)
+                                {
+                                    <tr>
+                                        <th scope="row">@serviceIndex</th>
+                                        <td>
+                                            <a href="#" class="show-service" data-service-id="@service.Id">
+                                                @service.Name
+                                            </a>
+                                        </td>
+                                        <td>@service.Price</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="edit-service" data-service-id="@service.Id">
+                                                    <img src="/images/buttons/Edit.svg" alt="Edit">
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="modal fade" id="removeServiceConfirmModal_@service.Id" tabindex="-1" aria-labelledby="removeServiceConfirmLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="removeServiceConfirmLabel">Потверждение удаления</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Вы действительно хотите удалить услугу: <b>@service.Name</b>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Нет</button>
+                                                                <a asp-area="admin" asp-controller="products" asp-action="removeService" asp-route-id="@service.Id" class="btn btn-outline-danger">Да</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-danger btn-remove-confirm" data-bs-toggle="modal" data-bs-target="#removeServiceConfirmModal_@service.Id">
+                                                    <img src="/images/buttons/Remove.svg" alt="Remove">
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    serviceIndex++;
+                                }
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">Добавить услугу</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/adminPanel/editService.js" asp-append-version="true"></script>
+<script src="~/js/adminPanel/showService.js" asp-append-version="true"></script>
+<script src="~/js/adminPanel/editBikePart.js" asp-append-version="true"></script>
+<script src="~/js/adminPanel/showBikePart.js" asp-append-version="true"></script>

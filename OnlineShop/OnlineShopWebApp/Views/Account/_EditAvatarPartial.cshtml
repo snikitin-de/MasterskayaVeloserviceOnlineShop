@@ -1,0 +1,26 @@
+﻿@model UserVM;
+
+<div class="modal-header">
+    <h5 class="modal-title">Редактирование аватара</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <form id="editAvatarForm" asp-area="" asp-controller="account" asp-action="editAvatar" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Login" value="@Model.Login" />
+        <div>
+            <label class="form-input-label">Текущий аватар</label><br />
+            <img src="@Model.Avatar.Path" class="avatar p-4" alt="Аватар">
+        </div>
+        <div>
+            <label asp-for="UploadedFile" class="form-input-label">Изображение аватара</label><br />
+            <input type="file" asp-for="UploadedFile" name="UploadedFile" class="form-control" />
+            <span asp-validation-for="UploadedFile" class="text-danger" />
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+    <button type="submit" form="editAvatarForm" class="btn btn-outline-primary">Сохранить изменения</button>
+</div>
+
+<script src="~/js/editAvatar.js" asp-append-version="true"></script>

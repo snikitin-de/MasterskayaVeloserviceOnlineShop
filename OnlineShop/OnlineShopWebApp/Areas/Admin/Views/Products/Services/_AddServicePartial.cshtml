@@ -1,0 +1,41 @@
+﻿@model ServiceVM
+
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceLabel">Добавление услуги</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAddService" asp-area="admin" asp-controller="products" asp-action="addService" method="post" enctype="multipart/form-data">
+                    <div>
+                        <label asp-for="Name" class="form-input-label">Наименование<sup class="required-field-mark">*</sup></label><br />
+                        <input type="text" asp-for="Name" name="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Price" class="form-input-label">Цена<sup class="required-field-mark">*</sup></label><br />
+                        <input type="number" asp-for="Price" name="Price" step="1" class="form-control" data-val-number="Введите корректную цену" />
+                        <span asp-validation-for="Price" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Description" class="form-input-label">Описание<sup class="required-field-mark">*</sup></label><br />
+                        <textarea asp-for="Description" name="Description" class="form-control" rows="15"></textarea>
+                        <span asp-validation-for="Description" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="UploadedFiles" class="form-input-label">Изображения товара</label><br />
+                        <input type="file" asp-for="UploadedFiles" name="UploadedFiles" class="form-control" multiple />
+                        <span asp-validation-for="UploadedFiles" class="text-danger" />
+                    </div>
+                    <input type="hidden" asp-for="Category" value="@CategoryVM.Services"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Закрыть</button>
+                <button id="btnAddService" type="submit" form="formAddService" class="btn btn-outline-primary">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+</div>

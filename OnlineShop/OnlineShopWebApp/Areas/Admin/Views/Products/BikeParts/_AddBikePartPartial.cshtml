@@ -1,0 +1,106 @@
+﻿@model BikePartVM
+
+<div class="modal fade" id="addBikePartModal" tabindex="-1" aria-labelledby="addBikePartLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBikePartLabel">Добавление товара</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAddBikePart" asp-area="admin" asp-controller="products" asp-action="addBikePart" method="post" enctype="multipart/form-data">
+                    <div>
+                        <label asp-for="Name" class="form-input-label">Наименование<sup class="required-field-mark">*</sup></label><br />
+                        <input type="text" asp-for="Name" name="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Manufacturer" class="form-input-label">Производитель</label><br />
+                        <input type="text" asp-for="Manufacturer" name="Manufacturer" class="form-control" />
+                        <span asp-validation-for="Manufacturer" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Model" class="form-input-label">Модель</label><br />
+                        <input type="text" asp-for="Model" name="Model" class="form-control" />
+                        <span asp-validation-for="Model" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Material" class="form-input-label">Материал</label><br />
+                        <input type="text" asp-for="Material" name="Material" class="form-control" />
+                        <span asp-validation-for="Material" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Color" class="form-input-label">Цвет</label><br />
+                        <input type="text" asp-for="Color" name="Color" class="form-control" />
+                        <span asp-validation-for="Color" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Weight" class="form-input-label">Вес (грамм)</label><br />
+                        <input type="number" asp-for="Weight" name="Weight" step="0.1" class="form-control" data-val-number="Введите корректный вес" />
+                        <span asp-validation-for="Weight" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Diameter" class="form-input-label">Диаметр (миллиметр)</label><br />
+                        <input type="number" asp-for="Diameter" name="Diameter" step="0.1" class="form-control" data-val-number="Введите корректный диаметр" />
+                        <span asp-validation-for="Diameter" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Width" class="form-input-label">Ширина (миллиметр)</label><br />
+                        <input type="number" asp-for="Width" name="Width" step="0.1" class="form-control" data-val-number="Введите корректную ширину" />
+                        <span asp-validation-for="Width" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Length" class="form-input-label">Длина (миллиметр)</label><br />
+                        <input type="number" asp-for="Length" name="Length" step="0.1" class="form-control" data-val-number="Введите корректную длину" />
+                        <span asp-validation-for="Length" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Depth" class="form-input-label">Глубина (миллиметр)</label><br />
+                        <input type="number" asp-for="Depth" name="Depth" step="0.1" class="form-control" data-val-number="Введите корректную глубину"/>
+                        <span asp-validation-for="Depth" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="LinksNumber" class="form-input-label">Количество звеньев (штука)</label><br />
+                        <input type="number" asp-for="LinksNumber" name="LinksNumber" step="1" class="form-control" data-val-number="Введите корректное количество звеньев" />
+                        <span asp-validation-for="LinksNumber" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="InstallationWidth" class="form-input-label">Установочная ширина (миллиметр)</label><br />
+                        <input type="number" asp-for="InstallationWidth" name="InstallationWidth" step="0.1" class="form-control" data-val-number="Введите корректную установочную ширину" />
+                        <span asp-validation-for="InstallationWidth" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="InstallationDiameter" class="form-input-label">Установочный диаметр (миллиметр)</label><br />
+                        <input type="number" asp-for="InstallationDiameter" name="InstallationDiameter" step="0.1" class="form-control" data-val-number="Введите корректный установочный диаметр" />
+                        <span asp-validation-for="InstallationDiameter" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="TypeAndPurpose" class="form-input-label">Тип и назначение</label><br />
+                        <input type="text" asp-for="TypeAndPurpose" name="TypeAndPurpose" class="form-control" />
+                        <span asp-validation-for="TypeAndPurpose" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Price" class="form-input-label">Цена<sup class="required-field-mark">*</sup></label><br />
+                        <input type="number" asp-for="Price" name="Price" step="1" class="form-control" data-val-number="Введите корректную цену" />
+                        <span asp-validation-for="Price" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="Description" class="form-input-label">Описание<sup class="required-field-mark">*</sup></label><br />
+                        <textarea asp-for="Description" name="Description" class="form-control" rows="15"></textarea>
+                        <span asp-validation-for="Description" class="text-danger" />
+                    </div>
+                    <div>
+                        <label asp-for="UploadedFiles" class="form-input-label">Изображения товара</label><br />
+                        <input type="file" asp-for="UploadedFiles" name="UploadedFiles" class="form-control" multiple />
+                        <span asp-validation-for="UploadedFiles" class="text-danger" />
+                    </div>
+                    <input type="hidden" asp-for="Category" value="@CategoryVM.BikeParts"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Закрыть</button>
+                <button id="btnAddBikePart" type="submit" form="formAddBikePart" class="btn btn-outline-primary">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+</div>

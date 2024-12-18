@@ -1,0 +1,61 @@
+﻿@model CartVM
+
+@{
+    ViewData["Title"] = "Корзина";
+    var itemsIndex = 1;
+}
+
+<h2 class="page-title">Корзина</h2>
+
+@if (@Model.Items.Count() == 0)
+{
+    <p>В корзине еще нет товаров или услуг!</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model.Items)
+            {
+                <tr>
+                    <th scope="row">@itemsIndex</th>
+                    <td>@item.Item.Name</td>
+                    <td>
+                        <div class="cart-product-count">
+                            <button type="button" class="btn btn-outline-secondary btn-cart-product-count" onclick="DecreaseCartItem(`@Html.Raw(item.Item.Id)`)">-</button>
+                            <span class="btn-cart-product-count">@item.Quantity</span>
+                            <button type="button" class="btn btn-outline-secondary btn-cart-product-count" onclick="IncreaseCartItem(`@Html.Raw(item.Item.Id)`)">+</button>
+                        </div>
+                    </td>
+                    <td>@Math.Round(item.Item.Price)</td>
+                    <td>@Math.Round(item.Sum)</td>
+                </tr>
+
+                itemsIndex++;
+            }
+        </tbody>
+        <tfoot>
+            <tr class="table-danger">
+                <th colspan="4">Общая сумма заказа</th>
+                <td><b>@Math.Round(Model.Sum)</b></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="float-end">
+        <a class="btn btn-outline-primary" href="/" role="button">Продолжить покупки</a>
+        <a asp-controller="order" asp-action="index" class="btn btn-outline-success">Оформить заказ</a>
+        <button type="button" class="btn btn-outline-danger" onclick="ClearCart()">Очистить корзину</button>
+    </div>
+}
+
+<script src="~/js/cart.js" asp-append-version="true"></script>

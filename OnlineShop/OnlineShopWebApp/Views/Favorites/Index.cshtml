@@ -1,0 +1,121 @@
+﻿@model FavoritesVM
+
+@{
+    ViewData["Title"] = "Избранное";
+}
+
+<h2 class="page-title">Избранное</h2>
+
+@if (@Model.Products.Count() == 0)
+{
+    <p>В избранном еще нет товаров или услуг!</p>
+}
+else
+{
+    <div class="container">
+        <div class="row g-3">
+            @{
+                var bikeParts = @Model.Products.Where(x => x.Category == CategoryVM.BikeParts);
+                var services = @Model.Products.Where(x => x.Category == CategoryVM.Services);
+            }
+
+            <h3>Товары</h3>
+
+            @if (bikeParts.Count() == 0)
+            {
+                <p>В избранном еще нет товаров!</p>
+            }
+            else
+            {
+                @foreach (var bikePart in bikeParts)
+                {
+                    <div class="col-sm-3">
+                        <div class="card card-favorites shadow bg-white h-100">
+                            <div class="d-flex justify-content-end p-2">
+                                <button type="button" class="btn btn-outline-secondary btn-favorites-list-page ms-auto" onclick="RemoveFromFavorites(`@Html.Raw(bikePart.Id)`)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <img src="@bikePart.Images[0].Path" class="card-img-top p-4" alt="@bikePart.Name">
+
+                            <div class="card-body d-flex flex-column">
+                                <div class="card-title">
+                                    <a asp-controller="product" asp-action="index" asp-route-id="@bikePart.Id" class="card-link">@bikePart.Name</a>
+                                </div>
+                                <div class="d-flex align-items-end mt-auto">
+                                    <h5 class="card-text"><b>@Math.Round(bikePart.Price) ₽</b></h5>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="form-check bike-parts-compare">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkBoxCompare-@bikePart.Id" data-bikePart="@bikePart.Id">
+                                        <label class="form-check-label" for="compare-@bikePart.Id">
+                                            Сравнить
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="btn-group-vertical col-12 gap-2 pb-2">
+                                    <input type="button" class="btn btn-outline-secondary" onclick="AddProduct(`@Html.Raw(bikePart.Id)`)" value="Добавить в корзину" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <h3 class="page-title-favorites-services">Услуги</h3>
+
+            @if (services.Count() == 0)
+            {
+                <p>В избранном еще нет услуг!</p>
+            }
+            else
+            {
+                @foreach (var service in services)
+                {
+                    <div class="col-sm-3">
+                        <div class="card card-favorites shadow bg-white h-100">
+                            <div class="d-flex justify-content-end p-2">
+                                <button type="button" class="btn btn-outline-secondary btn-favorites-list-page ms-auto" onclick="RemoveFromFavorites(`@Html.Raw(service.Id)`)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <img src="@service.Images[0].Path" class="card-img-top p-4" alt="@service.Name">
+
+                            <div class="card-body d-flex flex-column">
+                                <div class="card-title">
+                                    <a asp-controller="Product" asp-action="Index" asp-route-id="@service.Id" class="card-link">@service.Name</a>
+                                </div>
+                                <div class="d-flex align-items-end mt-auto">
+                                    <h5 class="card-text"><b>@Math.Round(service.Price) ₽</b></h5>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="btn-group-vertical col-12 gap-2 pb-2">
+                                    <input type="button" class="btn btn-outline-secondary" onclick="AddProduct(`@Html.Raw(service.Id)`)" value="Добавить в корзину" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="float-end btn-comparison-list">
+        <a class="btn btn-outline-primary" href="/" role="button">Продолжить покупки</a>
+        <button type="button" class="btn btn-outline-danger" onclick="ClearFavorites()">Очистить избранное</button>
+    </div>
+}
+
+<script src="~/js/favorites.js" asp-append-version="true"></script>
