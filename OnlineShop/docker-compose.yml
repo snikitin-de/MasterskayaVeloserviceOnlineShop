@@ -18,6 +18,17 @@ services:
       - app-network
     volumes:
       - postgresql_data:/var/lib/postgresql/data
+  nginx:
+    image: nginx:1.27.3
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
   onlineshopwebapp:
     container_name: masterskaya_veloservice_web_app
     image: ${DOCKER_REGISTRY-}onlineshopwebapp
@@ -26,8 +37,6 @@ services:
     build:
       context: .
       dockerfile: OnlineShopWebApp/Dockerfile
-    ports:
-      - "443:8081" # HTTPS
     networks:
       - app-network
     volumes:
@@ -43,8 +52,6 @@ services:
     build:
       context: .
       dockerfile: OnlineShopWebApi/Dockerfile
-    ports:
-      - "4443:8081" # HTTPS
     networks:
       - app-network
     depends_on:
