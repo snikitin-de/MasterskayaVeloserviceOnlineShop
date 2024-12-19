@@ -8,6 +8,8 @@ function AddProduct(productId) {
                     icon: 'success',
                     text: 'Товар или услуга добавлены в корзину!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -19,6 +21,8 @@ function AddProduct(productId) {
                     icon: 'error',
                     text: 'Возникла ошибка при добавлении товара или услуги в корзину!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -60,6 +64,8 @@ function RemoveFromFavorites(productId) {
                         icon: 'success',
                         text: 'Товар или услуга удалены из избранного!',
                         showConfirmButton: false,
+                        allowOutsideClick: true,
+                        allowEscapeKey: true,
                         timer: 1500
                     }).then((result) => {
                         if (result.isDismissed) {
@@ -71,6 +77,8 @@ function RemoveFromFavorites(productId) {
                         icon: 'error',
                         text: 'Возникла ошибка при удалении товара или услуги из избранного!',
                         showConfirmButton: false,
+                        allowOutsideClick: true,
+                        allowEscapeKey: true,
                         timer: 1500
                     }).then((result) => {
                         if (result.isDismissed) {

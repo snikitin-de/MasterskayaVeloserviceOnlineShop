@@ -8,6 +8,8 @@ function AddProduct(productId) {
                     icon: 'success',
                     text: 'Услуга добавлена в корзину!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -19,6 +21,8 @@ function AddProduct(productId) {
                     icon: 'error',
                     text: 'Для добавления услуги в корзину необходимо авторизоваться!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -30,6 +34,8 @@ function AddProduct(productId) {
                     icon: 'error',
                     text: 'Возникла ошибка при добавлении услуги в корзину!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -51,6 +57,8 @@ function AddProductToFavorites(productId) {
                     icon: 'success',
                     text: 'Услуга добавлена в избранное!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -62,6 +70,8 @@ function AddProductToFavorites(productId) {
                     icon: 'error',
                     text: 'Для добавления услуги в избранное необходимо авторизоваться!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
@@ -73,6 +83,8 @@ function AddProductToFavorites(productId) {
                     icon: 'error',
                     text: 'Возникла ошибка при добавлении услуги в избранное!',
                     showConfirmButton: false,
+                    allowOutsideClick: true,
+                    allowEscapeKey: true,
                     timer: 1500
                 }).then((result) => {
                     if (result.isDismissed) {
