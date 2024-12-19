@@ -2,8 +2,8 @@
 function AddProduct(productId) {
     $.ajax({
         url: `/cart/add/${productId}`,
-        complete: function (jqxhr) {
-            if (jqxhr.status === 200) {
+        complete: function (response) {
+            if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
                     text: 'Товар или услуга добавлены в корзину!',
@@ -57,9 +57,9 @@ checkboxesCompare.forEach((checkbox) => {
 function RemoveFromFavorites(productId) {
     $.ajax({
         url: `/favorites/remove/${productId}`,
-        complete: function (jqxhr) {
-            if (jqxhr.status === 200) {
-                if (jqxhr.status === 200) {
+        complete: function (response) {
+            if (response.status === 200) {
+                if (response.status === 200) {
                     Swal.fire({
                         icon: 'success',
                         text: 'Товар или услуга удалены из избранного!',

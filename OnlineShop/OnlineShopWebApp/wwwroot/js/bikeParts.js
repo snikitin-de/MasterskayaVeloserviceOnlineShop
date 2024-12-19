@@ -2,8 +2,8 @@
 function AddProduct(productId) {
     $.ajax({
         url: `/cart/add/${productId}`,
-        complete: function (jqxhr) {
-            if (jqxhr.status === 200) {
+        complete: function (response) {
+            if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
                     text: 'Товар добавлен в корзину!',
@@ -16,7 +16,7 @@ function AddProduct(productId) {
                         window.location.reload();
                     }
                 });
-            } else if (jqxhr.status === 401) {
+            } else if (response.status === 401) {
                 Swal.fire({
                     icon: 'error',
                     text: 'Для добавления товара в корзину необходимо авторизоваться!',
@@ -51,8 +51,8 @@ function AddProduct(productId) {
 function AddProductToFavorites(productId) {
     $.ajax({
         url: `/bikeParts/addProductToFavorites/${productId}`,
-        complete: function (jqxhr) {
-            if (jqxhr.status === 200) {
+        complete: function (response) {
+            if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
                     text: 'Товар добавлен в корзину!',
@@ -65,7 +65,7 @@ function AddProductToFavorites(productId) {
                         window.location.reload();
                     }
                 });
-            } else if (jqxhr.status === 401) {
+            } else if (response.status === 401) {
                 Swal.fire({
                     icon: 'error',
                     text: 'Для добавления товара в избранное необходимо авторизоваться!',
@@ -107,8 +107,8 @@ checkboxesCompare.forEach((checkbox) => {
 
             $.ajax({
                 url: `/bikeParts/addProductToComparison?id=${bikePartId}`,
-                complete: function (jqxhr) {
-                    if (jqxhr.status === 200) {
+                complete: function (response) {
+                    if (response.status === 200) {
                         Swal.fire({
                             icon: 'success',
                             text: 'Товар добавлен в сравнение!',
@@ -121,7 +121,7 @@ checkboxesCompare.forEach((checkbox) => {
                                 window.location.reload();
                             }
                         });
-                    } else if (jqxhr.status === 401) {
+                    } else if (response.status === 401) {
                         Swal.fire({
                             icon: 'error',
                             text: 'Для добавления товара в сравнение необходимо авторизоваться!',
