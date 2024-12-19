@@ -51,6 +51,7 @@ services:
       - app-network
     volumes:
       - images:/app/wwwroot/images
+      - data-protection-keys:/root/.aspnet/DataProtection-Keys
     depends_on:
       - postgres
     restart: unless-stopped
@@ -82,4 +83,5 @@ networks:
   app-network:
 volumes:
   postgresql_data:
+  data-protection-keys:
   images:  
