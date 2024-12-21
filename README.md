@@ -8,6 +8,10 @@
 
 ![Swagger](https://github.com/user-attachments/assets/8654de37-69ba-4e1a-9d5f-040800c8f0d8)
 
+Демонстрация работы приложения:
+
+https://github.com/user-attachments/assets/6dcd230e-624e-4eab-9cb1-118a8e1715b3
+
 ## 📄 Описание
 
 ### Docker
@@ -26,5 +30,10 @@
 * PostgreSQL
 * Serilog
 * Docker
+* Secret Manager (cloud.ru)
+* Nginx
 
 ### 🧩 Архитектура
+
+![Solution](https://github.com/user-attachments/assets/03ef4b76-2b9d-43fe-9c6c-98502564dd2e)
+![WebApp](https://github.com/user-attachments/assets/c91d1997-42fa-4bcf-9974-f093444ec6db)
