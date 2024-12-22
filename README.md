@@ -315,6 +315,7 @@ https://github.com/user-attachments/assets/6dcd230e-624e-4eab-9cb1-118a8e1715b3
 * Docker
 * Secret Manager ([cloud.ru](https://cloud.ru/docs/scsm/ug/index.html))
 * Nginx
+* HTML, CSS, JS, AJAX
 * Newtonsoft.Json
 * Serilog — логирование данных
 * DotNetEnv — работа с файлами с переменными окружения
