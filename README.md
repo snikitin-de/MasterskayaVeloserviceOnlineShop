@@ -4,7 +4,11 @@
 
 Проект реализован в виде *MVC* приложения и так же имеет своё *WebApi*. Проект обёрнут в *Docker* (см. раздел *Docker*).
 
-![Главная страница сайта](https://github.com/user-attachments/assets/fc4ba245-c387-41bc-ab1f-630737b3b1c4)
+MVC приложение:
+
+![MVC](https://github.com/user-attachments/assets/fc4ba245-c387-41bc-ab1f-630737b3b1c4)
+
+WebApi приложение:
 
 ![Swagger](https://github.com/user-attachments/assets/8654de37-69ba-4e1a-9d5f-040800c8f0d8)
 
