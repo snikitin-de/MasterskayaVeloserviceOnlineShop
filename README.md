@@ -195,7 +195,7 @@ APP_SECRET_VERSION=latest
 
 Ниже рассмотрим `docker-compose.yml` для среды разработки с включённым Swagger.
 
-Путь до Swagger по умолчанию {Scheme}://{ServiceHost}:{ServicePort}/swagger
+Путь до Swagger по умолчанию `{Scheme}://{ServiceHost}:{ServicePort}/swagger`.
 
 ```yaml
 version: '3.9'
