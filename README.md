@@ -302,18 +302,23 @@ https://github.com/user-attachments/assets/6dcd230e-624e-4eab-9cb1-118a8e1715b3
 
 ## 🔧 Техническая часть
 
+Используемые библиотеки и технологии:
+
 * ASP.NET CORE MVC/WebApi
+* ASP.NET Core Identity
 * Entity Framework Core
 * Linq
-* ASP.NET Core Identity
 * JWT bearer-based authentication
 * Postman/Swagger
 * Dependency Injection
 * PostgreSQL
-* Serilog
 * Docker
-* Secret Manager (cloud.ru)
+* Secret Manager ([cloud.ru](https://cloud.ru/docs/scsm/ug/index.html))
 * Nginx
+* Newtonsoft.Json
+* Serilog - логирование данных
+* DotNetEnv - работа с файлами с переменными окружения
+* Markdig - рендер `Markdown` в `HTML`
 
 ### 🧩 Архитектура
 
